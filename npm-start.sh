@@ -25,6 +25,11 @@ on_exit () {
   wait ${pids[0]}
 }
 
+on_proxy_exit () {
+  kill $PID
+  wait $PID
+}
+
 print_header () {
   printf "\n> $npm_package_name@$npm_package_version $1 $PWD\n> $2\n\n"
 }
@@ -60,23 +65,14 @@ run_poststart () {
   fi
 }
 
-run () {
+# always fork to get rid of weird "terminated" message
+# also this gives us docker support since we don't run as pid=1
+if [ "$npm_start_fork" = "" ]; then
+  trap on_proxy_exit SIGTERM
+  npm_start_fork=true $0 &
+  PID=$!
+  wait $PID
+else
   load_package
   run_prestart && run_start && run_poststart
-}
-
-on_proxy_exit () {
-  kill $PID
-  wait $PID
-}
-
-# if we are pid=1 we need to support to work with graceful restarts
-# this is mostly an docker issue
-if [ "$$" = "1" ]; then
-  trap on_proxy_exit SIGTERM
-  $0 &
-  PID=$!
-  wait
-else
-  run
 fi

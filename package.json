@@ -2,7 +2,6 @@
   "name": "npm-start",
   "version": "1.0.1",
   "description": "'npm start' written in bash that propagates kill to subprocesses",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/mafintosh/npm-start"

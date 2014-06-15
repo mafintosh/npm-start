@@ -10,4 +10,4 @@ on_exit () {
 }
 
 trap on_exit EXIT
-npm start
+npm start "$@"

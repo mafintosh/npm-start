@@ -46,7 +46,7 @@ run_start () {
 
 run_prestart () {
   if [ "$npm_package_scripts_prestart" != "" ]; then
-    print_header restart "$npm_package_scripts_prestart"
+    print_header prestart "$npm_package_scripts_prestart"
     sh -c "$npm_package_scripts_prestart"
     return $?
   fi
@@ -54,7 +54,7 @@ run_prestart () {
 
 run_poststart () {
   if [ "$npm_package_scripts_poststart" != "" ]; then
-    print_header restart "$npm_package_scripts_poststart"
+    print_header poststart "$npm_package_scripts_poststart"
     sh -c "$npm_package_scripts_poststart"
     return $?
   fi
@@ -70,6 +70,8 @@ on_proxy_exit () {
   wait $PID
 }
 
+# if we are pid=1 we need to support to work with graceful restarts
+# this is mostly an docker issue
 if [ "$$" = "1" ]; then
   trap on_proxy_exit SIGTERM
   $0 &

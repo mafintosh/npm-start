@@ -1,6 +1,6 @@
 {
   "name": "npm-start",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "'npm start' that propagates kill to all subprocesses",
   "main": "index.js",
   "repository": {

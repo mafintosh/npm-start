@@ -60,5 +60,21 @@ run_poststart () {
   fi
 }
 
-load_package
-run_prestart && run_start && run_poststart
+run () {
+  load_package
+  run_prestart && run_start && run_poststart
+}
+
+on_proxy_exit () {
+  kill $PID
+  wait $PID
+}
+
+if [ "$$" = "1" ]; then
+  trap on_proxy_exit SIGTERM
+  $0 &
+  PID=$!
+  wait
+else
+  run
+fi

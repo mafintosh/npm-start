@@ -11,11 +11,11 @@ load_package () {
   eval $(node -e "\
     var p = require('./package');\
     var s = p.scripts || {};\
-    console.log('npm_package_name='+JSON.stringify(p.name || ''));\
-    console.log('npm_package_version='+JSON.stringify(p.version || ''));\
-    console.log('npm_package_scripts_start='+JSON.stringify(s.start || ''));\
-    console.log('npm_package_scripts_prestart='+JSON.stringify(s.prestart || ''));\
-    console.log('npm_package_scripts_poststart='+JSON.stringify(s.poststart || ''));\
+    console.log('export npm_package_name='+JSON.stringify(p.name || ''));\
+    console.log('export npm_package_version='+JSON.stringify(p.version || ''));\
+    console.log('export npm_package_scripts_start='+JSON.stringify(s.start || ''));\
+    console.log('export npm_package_scripts_prestart='+JSON.stringify(s.prestart || ''));\
+    console.log('export npm_package_scripts_poststart='+JSON.stringify(s.poststart || ''));\
   " 2> /dev/null)
 }
 

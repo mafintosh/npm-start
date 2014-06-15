@@ -18,6 +18,10 @@ $ npm-start
 The difference is that when it receives `SIGTERM` it will kill all subprocesses as well (which [npm start](https://www.npmjs.org/doc/cli/npm-start.html) doesn't do)
 and wait for them to exit
 
+```
+$ kill pid-of-npm-start # this will actually kill the node process
+```
+
 ## License
 
 MIT

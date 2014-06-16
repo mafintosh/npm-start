@@ -12,6 +12,7 @@ load_package () {
     var p = require('./package');\
     var s = p.scripts || {};\
     console.log('export npm_package_name='+JSON.stringify(p.name || ''));\
+    console.log('export npm_package_main='+JSON.stringify(p.main || ''));\
     console.log('export npm_package_version='+JSON.stringify(p.version || ''));\
     console.log('export npm_package_scripts_start='+JSON.stringify(s.start || ''));\
     console.log('export npm_package_scripts_prestart='+JSON.stringify(s.prestart || ''));\
@@ -35,6 +36,7 @@ print_header () {
 }
 
 run_start () {
+  [ "$npm_package_scripts_start" = "" ] && [ -f "$npm_package_main" ] && npm_package_scripts_start="node $npm_package_main"
   [ "$npm_package_scripts_start" = "" ] && [ -f server.js ] && npm_package_scripts_start="node server.js"
   [ "$npm_package_scripts_start" = "" ] && [ -f index.js ] && npm_package_scripts_start="node index.js"
 

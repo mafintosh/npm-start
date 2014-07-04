@@ -1,7 +1,7 @@
 #!/bin/bash
 
 subprocs () {
-  for pid in $(ps a -o ppid,pid | awk "\$1 == $1 {print \$2}"); do
+  for pid in $(ps ax -o ppid,pid | awk "\$1 == $1 {print \$2}"); do
     echo $pid
     subprocs $pid
   done

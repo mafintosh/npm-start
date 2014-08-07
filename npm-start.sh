@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH=node_modules/.bin:$PATH
+
 subprocs () {
   for pid in $(ps ax -o ppid,pid | awk "\$1 == $1 {print \$2}"); do
     echo $pid

@@ -49,14 +49,14 @@ run_start () {
 
   print_header start "$npm_package_scripts_start"
   trap on_exit EXIT
-  sh -c "true && $npm_package_scripts_start" # true && to force a subshell
+  sh -c "true && $npm_package_scripts_start \"\$@\"" start "$@" # true && to force a subshell
   return $?
 }
 
 run_prestart () {
   if [ "$npm_package_scripts_prestart" != "" ]; then
     print_header prestart "$npm_package_scripts_prestart"
-    sh -c "$npm_package_scripts_prestart"
+    sh -c "$npm_package_scripts_prestart \"\$@\"" prestart "$@"
     return $?
   fi
 }
@@ -64,7 +64,7 @@ run_prestart () {
 run_poststart () {
   if [ "$npm_package_scripts_poststart" != "" ]; then
     print_header poststart "$npm_package_scripts_poststart"
-    sh -c "$npm_package_scripts_poststart"
+    sh -c "$npm_package_scripts_poststart \"\$@\"" poststart "$@"
     return $?
   fi
 }
@@ -73,10 +73,10 @@ run_poststart () {
 # also this gives us docker support since we don't run as pid=1
 if [ "$npm_start_fork" = "" ]; then
   trap on_proxy_exit SIGTERM
-  npm_start_fork=true $0 &
+  npm_start_fork=true "$0" "$@" &
   PID=$!
   wait $PID
 else
   load_package
-  run_prestart && run_start && run_poststart
+  run_prestart "$@" && run_start "$@" && run_poststart "$@"
 fi

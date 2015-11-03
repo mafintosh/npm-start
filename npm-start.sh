@@ -1,6 +1,19 @@
 #!/bin/bash
 
-export PATH=node_modules/.bin:$PATH
+update_path () {
+  local prev=""
+  local rel="node_modules/.bin"
+  local result=""
+
+  while [ "$PWD" != "$prev" ]; do
+    prev="$PWD"
+    [ -d "node_modules/.bin" ] && result="$result$rel:"
+    rel="../$rel"
+    cd ..
+  done
+
+  export PATH="$result$PATH"
+}
 
 subprocs () {
   for pid in $(ps ax -o ppid,pid | awk "\$1 == $1 {print \$2}"); do
@@ -68,6 +81,8 @@ run_poststart () {
     return $?
   fi
 }
+
+update_path
 
 # always fork to get rid of weird "terminated" message
 # also this gives us docker support since we don't run as pid=1

@@ -4,14 +4,16 @@ update_path () {
   local prev=""
   local rel="node_modules/.bin"
   local result=""
-
+  local curr=$PWD
+  
   while [ "$PWD" != "$prev" ]; do
     prev="$PWD"
     [ -d "node_modules/.bin" ] && result="$result$rel:"
     rel="../$rel"
     cd ..
   done
-
+  cd $curr
+  
   export PATH="$result$PATH"
 }
 

@@ -31,7 +31,7 @@ signals to it's subprocesses. An
 [issue was created](https://github.com/npm/npm/issues/4603) but the decision was
 to not change the behavior.
 
-This script intends to maintain similar functionality with bash. Tn addition to
+This script intends to maintain similar functionality with bash. In addition to
 propagating KILL signals to subprocesses and passing Docker's memory limits to
 node, facilitating correct node garbage collection and memory constraints.
 

@@ -5,7 +5,7 @@ update_path () {
   local rel="node_modules/.bin"
   local result=""
   local curr=$PWD
-  
+
   while [ "$PWD" != "$prev" ]; do
     prev="$PWD"
     [ -d "node_modules/.bin" ] && result="$result$rel:"
@@ -13,7 +13,7 @@ update_path () {
     cd ..
   done
   cd $curr
-  
+
   export PATH="$result$PATH"
 }
 
@@ -22,6 +22,20 @@ subprocs () {
     echo $pid
     subprocs $pid
   done
+}
+
+load_container_limits () {
+  eval $(node -e "\
+    var pct_executable = 0.875; var kilo = 1024; var memory_limit_in_bytes;\
+    fs = require('fs');\
+    fs.readFile('/sys/fs/cgroup/memory/memory.limit_in_bytes', 'utf8', function(err, data){\
+      if (err) { return }\
+      if (memory_limit_in_bytes === 18446744073709551615) { return }\
+      memory_limit_in_bytes = parseInt(data);\
+      var max_old_space_size = memory_limit_in_bytes / kilo / kilo;\
+      console.log('export memory_limit_flags=\" --max_old_space_size='+max_old_space_size+' --max_executable_size='+max_old_space_size*pct_executable+'\"')\
+    });\
+  " 2> /dev/null)
 }
 
 load_package () {
@@ -53,9 +67,10 @@ print_header () {
 }
 
 run_start () {
-  [ "$npm_package_scripts_start" = "" ] && [ -f "$npm_package_main" ] && npm_package_scripts_start="node $npm_package_main"
-  [ "$npm_package_scripts_start" = "" ] && [ -f server.js ] && npm_package_scripts_start="node server.js"
-  [ "$npm_package_scripts_start" = "" ] && [ -f index.js ] && npm_package_scripts_start="node index.js"
+  echo "node$memory_limit_flags $npm_package_main"
+  [ "$npm_package_scripts_start" = "" ] && [ -f "$npm_package_main" ] && npm_package_scripts_start="node$memory_limit_flags $npm_package_main"
+  [ "$npm_package_scripts_start" = "" ] && [ -f server.js ] && npm_package_scripts_start="node$memory_limit_flags server.js"
+  [ "$npm_package_scripts_start" = "" ] && [ -f index.js ] && npm_package_scripts_start="node$memory_limit_flags index.js"
 
   if [ "$npm_package_scripts_start" = "" ]; then
     echo "Error: No start script specified." >&2
@@ -95,5 +110,6 @@ if [ "$npm_start_fork" = "" ]; then
   wait $PID
 else
   load_package
+  load_container_limits
   run_prestart "$@" && run_start "$@" && run_poststart "$@"
 fi

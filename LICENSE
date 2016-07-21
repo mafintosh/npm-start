@@ -1,6 +1,9 @@
 The MIT License (MIT)
 
-Copyright (c) 2014 Mathias Buus
+Copyright (c) 2014 Mathias Buus, 2016 Blaine Schanfeldt
+Copyright for portions of npm-start-container are held by Mathias Buus, 2014 as
+part of npm-start. All other copyright for npm-start-container are held by
+Blaine Schanfeldt 2016.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

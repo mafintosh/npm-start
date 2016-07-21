@@ -45,7 +45,7 @@ percentage of the memory available. See the below table for example values:
 
 ```
 Assigned  File/Buffer  Max        Max
-Memory  	Memory     	 old_space  executable
+Memory    Memory       old_space  executable
 100%      12.5%        87.5%      76.5%
 128       16           112        98
 256       32           224        196

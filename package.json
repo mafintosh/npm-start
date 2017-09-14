@@ -1,13 +1,13 @@
 {
-  "name": "npm-start",
-  "version": "1.4.2",
+  "name": "npm-start-container",
+  "version": "1.6.0",
   "description": "'npm start' written in bash that propagates kill to subprocesses",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mafintosh/npm-start"
+    "url": "git://github.com/blaines/npm-start-container"
   },
   "bin": {
-    "npm-start": "npm-start.sh"
+    "npm-start-container": "npm-start-container.sh"
   },
   "keywords": [
     "npm",
@@ -19,10 +19,10 @@
     "script",
     "bash"
   ],
-  "author": "Mathias Buus",
+  "author": "Mathias Buus, Blaine Schanfeldt",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mafintosh/npm-start/issues"
+    "url": "https://github.com/blaines/npm-start-container/issues"
   },
-  "homepage": "https://github.com/mafintosh/npm-start"
+  "homepage": "https://github.com/blaines/npm-start-container"
 }

@@ -26,14 +26,13 @@ subprocs () {
 
 load_container_limits () {
   eval $(node -e "\
-    var magic_pct = 0.875; var kilo = 1024; var memory_limit_in_bytes;\
     fs = require('fs');\
     fs.readFile('/sys/fs/cgroup/memory/memory.limit_in_bytes', 'utf8', function(err, data){\
       if (err) { return }\
       if (memory_limit_in_bytes === 18446744073709551615) { return }\
       memory_limit_in_bytes = parseInt(data);\
-      var max_old_space_size = (memory_limit_in_bytes / kilo / kilo)*magic_pct;\
-      console.log('export memory_limit_flags=\" --max_old_space_size='+max_old_space_size+' --max_executable_size='+max_old_space_size*magic_pct+'\"')\
+      var max_old_space_size = (memory_limit_in_bytes / kilo / kilo);\
+      console.log('export memory_limit_flags=\" --max_old_space_size='+max_old_space_size\"')\
     });\
   " 2> /dev/null)
 }

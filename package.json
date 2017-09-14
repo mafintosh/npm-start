@@ -1,6 +1,6 @@
 {
   "name": "npm-start-container",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "'npm start' written in bash that propagates kill to subprocesses",
   "repository": {
     "type": "git",

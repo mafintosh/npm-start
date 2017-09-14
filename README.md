@@ -35,7 +35,7 @@ This script intends to maintain similar functionality with bash. In addition to
 propagating KILL signals to subprocesses and passing Docker's memory limits to
 node, facilitating correct node garbage collection and memory constraints.
 
-`max_old_space_size` and `max_executable_size` are memory management flags in V8
+`max_old_space_size` is a memory management flag in V8
 The amount for V8 and buffer memory is reserved separately as buffers exist
 outside of the v8 heap.
 
@@ -44,25 +44,25 @@ The assigned memory value is determined from Docker's control group
 percentage of the memory available. See the below table for example values:
 
 ```
-Assigned  File/Buffer  Max        Max
-Memory    Memory       old_space  executable
-100%      12.5%        87.5%      76.5%
-128       16           112        98
-256       32           224        196
-384       48           336        294
-512       64           448        392
-640       80           560        490
-768       96           672        588
-896       112          784        686
-1024      128          896        784
-1152      144          1008       882
-1280      160          1120       980
-1408      176          1232       1078
-1536      192          1344       1176
-1664      208          1456       1274
-1792      224          1568       1372
-1920      240          1680       1470
-2048      256          1792       1568
+Assigned  File/Buffer  Max
+Memory    Memory       old_space
+100%      12.5%        87.5%
+128       16           112
+256       32           224
+384       48           336
+512       64           448
+640       80           560
+768       96           672
+896       112          784
+1024      128          896
+1152      144          1008
+1280      160          1120
+1408      176          1232
+1536      192          1344
+1664      208          1456
+1792      224          1568
+1920      240          1680
+2048      256          1792
 ```
 
 ## License
